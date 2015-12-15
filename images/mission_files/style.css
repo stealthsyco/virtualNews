@@ -1,0 +1,473 @@
+.navBar li{
+	display: inline-block;	
+	font-family: Josefin Sans;
+  	font-size: .8em;
+  	line-height: 30px;
+  	height: 30px;
+  	padding-right: 15px;
+  	padding-left: 20px;
+}
+
+.navBar .active{
+	font-weight: bold;
+	font-family: Josefin Sans;
+	font-size: 1.4em;
+	text-transform: uppercase;
+}
+
+.navBar ul {
+  list-style: none;
+  text-align: right;
+  padding: 0;
+  margin-right: 3.5%;
+}
+
+.navBar a {
+  text-decoration: none;
+  color: #230183;
+}
+
+.navBar a:visited{
+	color: none;
+}
+
+#homeTop {
+	height: 534px;
+	background-size: 100vw;
+	background-image: url('images/pageonephoto.png');
+	background-repeat: none;
+	margin: 0px;
+	padding: 0px;
+}
+
+#homeBot {
+	height: 545px;
+	background-size: 100vw;
+	background-image: url('images/bottompage1.png');
+	background-repeat: no-repeat;
+	margin: 0px;
+	padding: 0px;
+}
+
+#aboutTop{
+	height: 534px;
+	background-size: 100vw;
+	background-image: url('images/page2photo.png');
+	background-repeat: none;
+	margin: 0px;
+	padding: 0px;
+}
+
+/*#aboutBot{
+	height: 534px;
+	background-size: 100%;
+	background-image: url('images/bottompage2.png');
+	background-repeat: no-repeat;
+	margin: 0px;
+	padding: 0px;
+}*/
+
+#missionTop{
+	height: 534px;
+	background-size: 100vw;
+	background-image: url('images/page3photo.png');
+	background-repeat: none;
+	margin: 0px;
+	padding: 0px;
+}
+
+/*#missionBot{
+	height: 534px;
+	background-size: 100%;
+	background-image: url('images/bottompage3.png');
+	background-repeat: no-repeat;
+	margin: 0px;
+	padding: 0px;
+}*/
+
+#programsTop{
+	height: 550px;
+	background-size: 100vw;
+	background-image: url('images/page4photo.png');
+	background-repeat: none;
+	margin: 0px;
+	padding: 0px;
+}
+
+#programsBot{
+	text-align: center;
+	margin: 0px;
+	padding: 0px;
+	height: 534px;
+	background: -webkit-linear-gradient(left, #4E6F65, #2B5259);
+	background: -webkit-gradient(linear, left top, right top, from(#4E6F65), to(#2B5259));
+	background: -moz-linear-gradient(left, #4E6F65, #2B5259); 
+}
+
+#membershipTop{
+	height: 534px;
+	background-size: 100vw;
+	background-image: url('images/page5photo.png');
+	background-repeat: none;
+	margin: 0px;
+	padding: 0px;
+}
+
+#membershipBot{
+	height: 534px;
+	background-size: 100vw;
+	background-image: url('images/bottompage5.png');
+	background-repeat: no-repeat;
+	margin: 0px;
+	padding: 0px;
+}
+
+#marathonTop{
+	height: 534px;
+	background-size: 100vw;
+	background-image: url('images/page6photo.png');
+	background-repeat: none;
+	margin: 0px;
+	padding: 0px;
+}
+
+#marathonBot{
+	height: 534px;
+	background-size: 100vw;
+	background-image: url('images/bottompage6.png');
+	background-repeat: no-repeat;
+	margin: 0px;
+	padding: 0px;
+}
+
+#contactTop{
+	height: 534px;
+	background-size: 100vw;
+	background-image: url('images/page7photo.png');
+	background-repeat: none;
+	margin: 0px;
+	padding: 0px;
+}
+
+#contactBot{
+	height: 534px;
+	background-size: 100vw;
+	background-image: url('images/bottompage7.png');
+	background-repeat: no-repeat;
+	margin: 0px;
+	padding: 0px;
+}
+
+body#home{
+	background-image: url('images/homeLine.png');
+	background-repeat: no-repeat;
+	background-size: 35%;
+	padding: 0px;
+	margin: 0px;
+}
+
+#donateButton{
+	width: 218px;
+	height: 204px;
+	background-image: url('images/donatebutton.png');
+	position:absolute;
+    top:920px;
+    right: 0;
+}
+
+body#about{
+	background-image: url('images/greenLine.png');
+	background-repeat: no-repeat;
+	background-size: 35%;
+	padding: 0px;
+	margin: 0px;
+}
+
+body#mission{
+	background-image: url('images/homeLine.png');
+	background-repeat: no-repeat;
+	background-size: 35%;
+	padding: 0px;
+	margin: 0px;
+}
+
+body#programs{
+	background-image: url('images/lbLine.png');
+	background-repeat: no-repeat;
+	background-size: 35%;
+	padding: 0px;
+	margin: 0px;
+}
+
+body#membership{
+	background-image: url('images/yellowLine.png');
+	background-repeat: no-repeat;
+	background-size: 35%;
+	padding: 0px;
+	margin: 0px;
+}
+
+body#marathon{
+	background-image: url('images/lbLine.png');
+	background-repeat: no-repeat;
+	background-size: 35%;
+	padding: 0px;
+	margin: 0px;
+}
+
+body#contact{
+	background-image: url('images/yellowLine.png');
+	background-repeat: no-repeat;
+	background-size: 35%;
+	padding: 0px;
+	margin: 0px;
+}
+
+#trans1{
+	background-image: url('images/311.png');
+	background-repeat: no-repeat;
+	display: inline-block;
+	width: 159px;
+	height: 534px;
+	margin-right: -2px;
+}
+
+#trans1:hover {
+	background-image: url('images/3tran1.png');
+	background-repeat: no-repeat;
+	display: inline-block;
+	width: 247px;
+	height: 534px;
+	margin-left: -2px;
+	margin-right: -2px;
+}
+
+#trans2{
+	background-image: url('images/322.png');
+	background-repeat: no-repeat;
+	display: inline-block;
+	width: 159px;
+	height: 534px;
+	margin-left: -2px;
+	margin-right: -2px;
+}
+
+#trans2:hover {
+	background-image: url('images/3tran2.png');
+	background-repeat: no-repeat;
+	display: inline-block;
+	width: 247px;
+	height: 534px;
+	margin-left: -2px;
+	margin-right: -2px;
+}
+
+#trans3{
+	background-image: url('images/333.png');
+	background-repeat: no-repeat;
+	display: inline-block;
+	width: 159px;
+	height: 534px;
+	margin-left: -2px;
+	margin-right: -2px;
+}
+
+#trans3:hover {
+	background-image: url('images/3tran3.png');
+	background-repeat: no-repeat;
+	display: inline-block;
+	width: 247px;
+	height: 534px;
+	margin-left: -2px;
+	margin-right: -2px;
+}
+
+#trans4{
+	background-image: url('images/344.png');
+	background-repeat: no-repeat;
+	display: inline-block;
+	width: 159px;
+	height: 534px;
+	margin-left: -2px;
+	margin-right: -3px;
+}
+
+#trans4:hover {
+	background-image: url('images/3tran4.png');
+	background-repeat: no-repeat;
+	display: inline-block;
+	width: 247px;
+	height: 534px;
+	margin-left: -2px;
+	margin-right: -2px;
+}
+
+#trans5{
+	background-image: url('images/355.png');
+	background-repeat: no-repeat;
+	display: inline-block;
+	width: 159px;
+	height: 534px;
+	margin-left: -3px;
+	margin-right: -3px;
+}
+
+#trans5:hover {
+	background-image: url('images/3tran5.png');
+	background-repeat: no-repeat;
+	display: inline-block;
+	width: 247px;
+	height: 534px;
+	margin-left: -2px;
+	margin-right: -2px;
+}
+
+#trans6{
+	background-image: url('images/366.png');
+	background-repeat: no-repeat;
+	display: inline-block;
+	width: 159px;
+	height: 534px;
+	margin-left: -3px;
+	margin-right: -2px;
+}
+
+#trans6:hover {
+	background-image: url('images/3tran6.png');
+	background-repeat: no-repeat;
+	display: inline-block;
+	width: 247px;
+	height: 534px;
+	margin-left: -2px;
+	margin-right: -2px;
+}
+
+/* Page 2 slider */
+
+#aboutBot {
+	overflow:hidden;
+	width:100%;
+	height:534px;
+	background-color:#C36;
+	margin-left:0px;
+}
+
+.slider-wrapper {
+	position:relative;
+	left:0;
+	width:300vw;
+	height:100%;
+}
+
+.main-slide {
+	width:100vw;
+	display: inline-block;
+	height:534px;
+	float:left;
+}
+
+#slide1 { 
+	height: 534px;
+	background-size: 100%;
+	background-image: url('images/page2tran1.png');
+	background-repeat: no-repeat;
+	margin: 0px;
+	padding: 0px; 
+}
+#slide2 {
+	height: 534px;
+	background-size: 100%;
+	background-image: url('images/page2tran2.png');
+	background-repeat: no-repeat;
+	margin: 0px;
+	padding: 0px;
+}
+#slide3 { 
+	height: 534px;
+	background-size: 100%;
+	background-image: url('images/page2tran3.png');
+	background-repeat: no-repeat;
+	margin: 0px;
+	padding: 0px;
+}
+
+.slider-buttons {
+    position:absolute;
+    width:30px;
+    height:30px;
+}
+
+.slider-buttons:hover { cursor:pointer; }
+
+#main-slider-next {
+    background-color:red;
+    left:950px;
+    top:850px;
+}
+
+/* Page 3 slider */
+
+#missionBot {
+	overflow:hidden;
+	width:100%;
+	height:534px;
+	background-color:#C36;
+	margin-left:0px;
+}
+
+.slider-wrapperM {
+	position:relative;
+	left:0;
+	width:600vw;
+	height:100%;
+}
+
+#mslide1 { 
+	height: 534px;
+	background-size: 100%;
+	background-image: url('images/page3tran1.png');
+	background-repeat: no-repeat;
+	margin: 0px;
+	padding: 0px; 
+}
+#mslide3 { 
+	height: 534px;
+	background-size: 100%;
+	background-image: url('images/page3tran3.png');
+	background-repeat: no-repeat;
+	margin: 0px;
+	padding: 0px;
+}
+#mslide4 { 
+	height: 534px;
+	background-size: 100%;
+	background-image: url('images/page3tran4.png');
+	background-repeat: no-repeat;
+	margin: 0px;
+	padding: 0px; 
+}
+#mslide5 { 
+	height: 534px;
+	background-size: 100%;
+	background-image: url('images/page3tran5.png');
+	background-repeat: no-repeat;
+	margin: 0px;
+	padding: 0px; 
+}
+#mslide6 {
+	height: 534px;
+	background-size: 100%;
+	background-image: url('images/page3tran6.png');
+	background-repeat: no-repeat;
+	margin: 0px;
+	padding: 0px;
+}
+#mslide7 { 
+	height: 534px;
+	background-size: 100%;
+	background-image: url('images/page3tran7.png');
+	background-repeat: no-repeat;
+	margin: 0px;
+	padding: 0px;
+}
+

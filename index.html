@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>Testing</title>
+  <meta charset="utf-8">
+</head>
+<body style="margin: 0;">
+
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+
+<script src="js/three.min.js"></script>
+<script src="js/OrbitControls.js"></script>
+<script src="js/THREEx.KeyboardState.js"></script>
+<script src="js/BlendCharacter.js"></script>
+
+<script src="js/jquery-ui.js"></script>
+
+<!-- GUI script -->
+<script type='text/javascript' src='js/DAT.GUI.min.js'></script>
+
+<link rel=stylesheet href="css/jquery-ui.css" />
+<link rel=stylesheet href="css/info.css"/>
+<script src="js/info.js"></script>
+
+<div id="infoButton"></div>
+<div id="infoBox" title="Usage">
+
+Demo controls:
+<ul>
+<li> Q: play video
+<li> W: pause video
+<li> E: stop video
+<li> R: rewind to beginning
+</ul>
+</div>
+
+<!--<video id="video" src="https://www.youtube.com/embed/4CL4LNWHegk" type="video/mp4"></video>-->
+
+  <script>
+    // Set up the keyboard
+    var keyboard = new THREEx.KeyboardState();
+
+    // Set up the scene, camera, and renderer as global variables.
+    var scene, camera, renderer, animation;
+    var video, videoImage, videoImageContext, videoTexture, frame, wallTexture, tag, firstScriptTag;
+
+    init();
+    animate();
+
+    // Sets up the scene.
+    function init() {
+
+      // Create the scene and set the scene size.
+      scene = new THREE.Scene();
+      var WIDTH = window.innerWidth,
+          HEIGHT = window.innerHeight;
+
+      var windowHalfX = window.innerWidth / 2;
+          windowHalfY = window.innerHeight / 2;
+
+      // Create a renderer and add it to the DOM.
+      renderer = new THREE.WebGLRenderer({antialias:true});
+      renderer.setSize(WIDTH, HEIGHT);
+      document.body.appendChild(renderer.domElement);
+
+      // CAMERA //
+
+      var VIEW_ANGLE = 45, ASPECT = WIDTH / HEIGHT, NEAR = 0.1, FAR = 10000;
+      camera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
+
+      scene = new THREE.Scene();
+      scene.add(camera);
+
+      camera.position.set(0, 10, 25);
+
+      // Create an event listener that resizes the renderer with the browser window.
+      window.addEventListener('resize', function() {
+        var WIDTH = window.innerWidth,
+            HEIGHT = window.innerHeight;
+        renderer.setSize(WIDTH, HEIGHT);
+        camera.aspect = WIDTH / HEIGHT;
+        camera.updateProjectionMatrix();
+      });
+
+      // Set the background color of the scene.
+      renderer.setClearColor(0x333F47, 1);
+
+      // Create a light, set its position, and add it to the scene.
+      var light = new THREE.PointLight(0xffffff);
+      light.position.set(0,250,0);
+      scene.add(light);
+
+      // FLOOR
+
+      var floorTexture = new THREE.ImageUtils.loadTexture( 'models/woodFloor.jpg' );
+      floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping; 
+      //floorTexture.repeat.set( 10, 10 );
+      var floorMaterial = new THREE.MeshBasicMaterial( { map: floorTexture, side: THREE.DoubleSide } );
+      var floorGeometry = new THREE.PlaneGeometry(50, 50, 5, 10);
+      var floor = new THREE.Mesh(floorGeometry, floorMaterial);
+      floor.position.y = -0.5;
+      //floor.rotation.x = Math.PI / 2;
+      floor.rotation.x = Math.PI / 2;
+      scene.add(floor);
+
+      // BACK WALL
+
+      var wallTexture = new THREE.ImageUtils.loadTexture( 'images/newsBack.jpg' );
+      var wallMaterial = new THREE.MeshBasicMaterial( { map: wallTexture, side: THREE.DoubleSide } );
+      var wallGeometry = new THREE.PlaneGeometry(45, 19, 5, 10);
+      var wall = new THREE.Mesh(wallGeometry, wallMaterial);
+      wall.position.y = 9.5;
+      wall.position.z = -10;
+      scene.add(wall);
+
+      // GUI
+      addGUI();
+      // VIDEO STUFF //
+
+      // VIDEO FRAME //
+
+      frame = document.createElement( 'frame' );
+      frame.width = 640;
+      frame.height = 360;
+
+      frame.fillStyle = '#000000';
+      //frame.fillRect( 0, 0, frame.width, frame.height);
+
+      frameTexture = new THREE.Texture(frame);
+
+      var frameMaterial = new THREE.MeshBasicMaterial( { map: frameTexture, overdraw: true, side:THREE.DoubleSide} );
+      var frameGeometry = new THREE.PlaneGeometry( 14.5, 6.5, 1, 4);
+      var frameHolder = new THREE.Mesh( frameGeometry, frameMaterial );
+      frameHolder.position.set(9, 8, 0);
+      frameHolder.rotation.y = -.5;
+      scene.add(frameHolder);
+
+      // VIDEO //
+
+      //YOUTUBE stream
+
+      // <div id="player"></div>
+      // var tag = document.createElement('script');
+
+      // tag.src = "https://www.youtube.com/iframe_api";
+      // var firstScriptTag = document.getElementsByTagName('script')[0];
+      // firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+      // var player;
+      // function onYouTubeIframeAPIReady() {
+      //   player = new YT.Player('player', {
+      //     height: '360',
+      //     width: '640',
+      //     videoId: 'M71c1UVf-VE',
+      //     events: {
+      //       'onReady' : onPlayerReady,
+      //       'onStateChange': onPlayerStateChange
+      //     }
+      //   });
+      // }
+        
+      //   function onPlayerReady(event) {
+      //     event.target.playVideo();
+      //   }
+
+      //   var done = false;
+      //   function onPlayerStateChange(event) {
+      //     if(event.data == YT.PlayerState.PLAYING && !done) {
+      //       setTimeout(stopVideo, 20000);
+      //       done = true;
+      //     }
+      //   }
+
+      //   function stopVideo(){
+      //     player.stopVideo(); 
+      //   }
+
+      // another test
+      //video = document.getElementById( 'video' );
+      video = document.createElement( 'video' );
+      video.src = 'https://www.youtube.com/embed/4CL4LNWHegk';
+      //video.src.type = 'video/mp4';
+      //video.load();
+      //video.play();
+      // video = document.createElement( 'video' );
+      // video.src = "videos/testVid.webm";
+      // video.load();
+      // video.play();
+      
+      videoImage = document.createElement( 'canvas' );
+      videoImage.width = 640;
+      videoImage.height = 360;
+
+      videoImageContext = videoImage.getContext( '2d' );
+      // background color if no video present
+      videoImageContext.fillStyle = '#000000';
+      videoImageContext.fillRect( 0, 0, videoImage.width, videoImage.height );
+
+      videoTexture = new THREE.Texture( videoImage );
+      videoTexture.minFilter = THREE.LinearFilter;
+      videoTexture.magFilter = THREE.LinearFilter;
+      
+      var movieMaterial = new THREE.MeshBasicMaterial( { map: videoTexture, overdraw: true, side:THREE.DoubleSide } );
+      // the geometry on which the movie will be displayed;
+      //    movie image will be scaled to fit these dimensions.
+      var movieGeometry = new THREE.PlaneGeometry( 14, 6, 1, 4);
+      var movieScreen = new THREE.Mesh( movieGeometry, movieMaterial );
+      movieScreen.position.set(9, 8, .01);
+      movieScreen.rotation.y = -.5;
+      scene.add(movieScreen);
+
+
+      // Load in the mesh and add it to the scene.
+      var loader = new THREE.JSONLoader();
+      loader.load( "models/table.json", function(geometry){
+        var material = new THREE.MeshLambertMaterial({color: 0x926239});
+        mesh = new THREE.Mesh(geometry, material);
+        mesh.position.set(0, 1.75, 0);
+        scene.add(mesh);
+      });
+
+      loader.load( "models/animate.js", function(geometry, materials){
+
+        var material = new THREE.MeshLambertMaterial({color: 0xffe0bd});
+        mesh = new THREE.SkinnedMesh(geometry, material);
+        mesh.position.set(-6, .75, -4);
+        mesh.rotation.y = .25;
+        scene.add(mesh);
+        // animationInit(mesh);
+        // animation = new THREE.Animation(mesh, geometry.animation);
+        //animation.play(false, 0);
+
+      });
+
+      // blendMesh = new THREE.BlendCharacter();
+      // blendMesh.load( "models/animate.json", start);
+
+      // Add OrbitControls so that we can pan around with the mouse.
+      controls = new THREE.OrbitControls(camera, renderer.domElement, 0 , 0, 0);
+
+    }
+
+    // Renders the scene and updates the render as needed.
+    function animate() {
+
+      requestAnimationFrame(animate);
+      controls.update();
+      keyboardHandler();
+      //THREE.AnimationHandler.update(.01);
+
+      // Render the scene.
+
+      if ( video.readyState === video.HAVE_ENOUGH_DATA ) {
+        videoImageContext.drawImage( video, 0, 0 );
+
+        if ( videoTexture ) 
+          videoTexture.needsUpdate = true;
+        }
+
+      renderer.render(scene, camera);
+
+
+    }
+
+    function keyboardHandler(){
+      if ( keyboard.pressed("q") )
+        video.play();
+
+      if ( keyboard.pressed("w") )
+        video.pause();
+
+      if ( keyboard.pressed("e") ){ // stop video
+        video.pause();
+        video.currentTime = 0;
+        }
+
+      if ( keyboard.pressed("r") ) // rewind video
+        video.currentTime = 0;
+
+      if ( keyboard.pressed("a")){
+
+        controls = new THREE.OrbitControls(camera, renderer.domElement, 5, 8, 5);
+        camera.position.set(0, 8, 12);
+
+      }
+
+      if( keyboard.pressed("s")) {
+
+        controls = new THREE.OrbitControls(camera, renderer.domElement, -4, 9, 4);
+        camera.position.set(0, 10, 15);
+      }
+
+      if( keyboard.pressed("d")){
+
+        controls = new THREE.OrbitControls(camera, renderer.domElement, 1, 9, 0);
+        camera.position.set(-3, 10, 23);        
+      }
+    }
+
+    function addGUI(){
+    var gui = new dat.GUI();
+
+    gui.add(camera.position, 'x', -500,500).step(.05);
+    gui.add(camera.position, 'y', -500,500).step(5);
+    gui.add(camera.position, 'z', -50,50).step(5);
+    }
+
+  </script>
+
+</body>
+</html>
