@@ -36,6 +36,11 @@ Demo controls:
 
 <!--<video id="video" src="https://www.youtube.com/embed/4CL4LNWHegk" type="video/mp4"></video>-->
 
+<!--     <video id="video" autoplay style="display:none">
+      <source src="videos/GOT.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
+      <source src="videos/GOT.ogv" type='video/ogg; codecs="theora, vorbis"'>
+    </video> -->
+
   <script>
     // Set up the keyboard
     var keyboard = new THREEx.KeyboardState();
@@ -43,6 +48,8 @@ Demo controls:
     // Set up the scene, camera, and renderer as global variables.
     var scene, camera, renderer, animation;
     var video, videoImage, videoImageContext, videoTexture, frame, wallTexture, tag, firstScriptTag;
+
+    var blendMesh, container;
 
     init();
     animate();
@@ -55,6 +62,9 @@ Demo controls:
       var WIDTH = window.innerWidth,
           HEIGHT = window.innerHeight;
 
+      console.log(WIDTH);
+      console.log(HEIGHT);
+
       var windowHalfX = window.innerWidth / 2;
           windowHalfY = window.innerHeight / 2;
 
@@ -63,15 +73,17 @@ Demo controls:
       renderer.setSize(WIDTH, HEIGHT);
       document.body.appendChild(renderer.domElement);
 
+
+      // var ambient = new THREE.AmbientLight(0x666666);
+      // scene.add(ambient);
+
       // CAMERA //
 
       var VIEW_ANGLE = 45, ASPECT = WIDTH / HEIGHT, NEAR = 0.1, FAR = 10000;
       camera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
-
-      scene = new THREE.Scene();
       scene.add(camera);
 
-      camera.position.set(0, 10, 25);
+      camera.position.set(0, 30, 75);
 
       // Create an event listener that resizes the renderer with the browser window.
       window.addEventListener('resize', function() {
@@ -82,13 +94,33 @@ Demo controls:
         camera.updateProjectionMatrix();
       });
 
+      var sphere = new THREE.SphereGeometry( 0.25, 16, 8 );
+
       // Set the background color of the scene.
       renderer.setClearColor(0x333F47, 1);
 
       // Create a light, set its position, and add it to the scene.
-      var light = new THREE.PointLight(0xffffff);
-      light.position.set(0,250,0);
-      scene.add(light);
+
+      var lightAbove = new THREE.PointLight(0xffffff, .3);
+      lightAbove.add( new THREE.Mesh(sphere, new THREE.MeshBasicMaterial ( { color: 0xff0040 } ) ));
+      lightAbove.position.set(0,30,0);
+      scene.add(lightAbove);
+
+      var lightCenter = new THREE.PointLight(0xffffff, .6);
+      lightCenter.add( new THREE.Mesh(sphere, new THREE.MeshBasicMaterial ( { color: 0xff0040 } ) ));
+      lightCenter.position.set(0,30,75);
+      scene.add(lightCenter);
+
+      var leftLight = new THREE.PointLight(0xffffff, .2);
+      leftLight.add( new THREE.Mesh(sphere, new THREE.MeshBasicMaterial ( { color: 0xff0040 } ) ));
+      leftLight.position.set(-40,25,35);
+      scene.add(leftLight);
+
+      var rightLight = new THREE.PointLight(0xffffff, .2);
+      rightLight.add( new THREE.Mesh(sphere, new THREE.MeshBasicMaterial ( { color: 0xff0040 } ) ));
+      rightLight.position.set(40,25,35);
+      scene.add(rightLight);
+
 
       // FLOOR
 
@@ -96,9 +128,9 @@ Demo controls:
       floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping; 
       //floorTexture.repeat.set( 10, 10 );
       var floorMaterial = new THREE.MeshBasicMaterial( { map: floorTexture, side: THREE.DoubleSide } );
-      var floorGeometry = new THREE.PlaneGeometry(50, 50, 5, 10);
+      var floorGeometry = new THREE.PlaneGeometry(140, 75, 5, 10);
       var floor = new THREE.Mesh(floorGeometry, floorMaterial);
-      floor.position.y = -0.5;
+      floor.position.z = 15;
       //floor.rotation.x = Math.PI / 2;
       floor.rotation.x = Math.PI / 2;
       scene.add(floor);
@@ -107,10 +139,9 @@ Demo controls:
 
       var wallTexture = new THREE.ImageUtils.loadTexture( 'images/newsBack.jpg' );
       var wallMaterial = new THREE.MeshBasicMaterial( { map: wallTexture, side: THREE.DoubleSide } );
-      var wallGeometry = new THREE.PlaneGeometry(45, 19, 5, 10);
+      var wallGeometry = new THREE.PlaneGeometry(WIDTH/9, HEIGHT/24, 5, 10);
       var wall = new THREE.Mesh(wallGeometry, wallMaterial);
-      wall.position.y = 9.5;
-      wall.position.z = -10;
+      wall.position.set(0, HEIGHT/48, -18);
       scene.add(wall);
 
       // GUI
@@ -135,105 +166,36 @@ Demo controls:
       frameHolder.rotation.y = -.5;
       scene.add(frameHolder);
 
-      // VIDEO //
 
-      //YOUTUBE stream
-
-      // <div id="player"></div>
-      // var tag = document.createElement('script');
-
-      // tag.src = "https://www.youtube.com/iframe_api";
-      // var firstScriptTag = document.getElementsByTagName('script')[0];
-      // firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-      // var player;
-      // function onYouTubeIframeAPIReady() {
-      //   player = new YT.Player('player', {
-      //     height: '360',
-      //     width: '640',
-      //     videoId: 'M71c1UVf-VE',
-      //     events: {
-      //       'onReady' : onPlayerReady,
-      //       'onStateChange': onPlayerStateChange
-      //     }
-      //   });
-      // }
-        
-      //   function onPlayerReady(event) {
-      //     event.target.playVideo();
-      //   }
-
-      //   var done = false;
-      //   function onPlayerStateChange(event) {
-      //     if(event.data == YT.PlayerState.PLAYING && !done) {
-      //       setTimeout(stopVideo, 20000);
-      //       done = true;
-      //     }
-      //   }
-
-      //   function stopVideo(){
-      //     player.stopVideo(); 
-      //   }
-
-      // another test
-      //video = document.getElementById( 'video' );
-      video = document.createElement( 'video' );
-      video.src = 'https://www.youtube.com/embed/4CL4LNWHegk';
-      //video.src.type = 'video/mp4';
-      //video.load();
-      //video.play();
-      // video = document.createElement( 'video' );
-      // video.src = "videos/testVid.webm";
-      // video.load();
-      // video.play();
-      
-      videoImage = document.createElement( 'canvas' );
-      videoImage.width = 640;
-      videoImage.height = 360;
-
-      videoImageContext = videoImage.getContext( '2d' );
-      // background color if no video present
-      videoImageContext.fillStyle = '#000000';
-      videoImageContext.fillRect( 0, 0, videoImage.width, videoImage.height );
-
-      videoTexture = new THREE.Texture( videoImage );
-      videoTexture.minFilter = THREE.LinearFilter;
-      videoTexture.magFilter = THREE.LinearFilter;
-      
-      var movieMaterial = new THREE.MeshBasicMaterial( { map: videoTexture, overdraw: true, side:THREE.DoubleSide } );
-      // the geometry on which the movie will be displayed;
-      //    movie image will be scaled to fit these dimensions.
-      var movieGeometry = new THREE.PlaneGeometry( 14, 6, 1, 4);
-      var movieScreen = new THREE.Mesh( movieGeometry, movieMaterial );
-      movieScreen.position.set(9, 8, .01);
-      movieScreen.rotation.y = -.5;
-      scene.add(movieScreen);
-
-
-      // Load in the mesh and add it to the scene.
       var loader = new THREE.JSONLoader();
       loader.load( "models/table.json", function(geometry){
         var material = new THREE.MeshLambertMaterial({color: 0x926239});
         mesh = new THREE.Mesh(geometry, material);
-        mesh.position.set(0, 1.75, 0);
+        mesh.position.set(0, -0.9, 18);
+        mesh.scale.x = 3;
+        mesh.scale.y = 3;
+        mesh.scale.z = 8;
+        mesh.rotation.y = Math.PI/2;
         scene.add(mesh);
       });
 
-      loader.load( "models/animate.js", function(geometry, materials){
+      var charLoader = new THREE.JSONLoader();
 
-        var material = new THREE.MeshLambertMaterial({color: 0xffe0bd});
-        mesh = new THREE.SkinnedMesh(geometry, material);
-        mesh.position.set(-6, .75, -4);
-        mesh.rotation.y = .25;
-        scene.add(mesh);
-        // animationInit(mesh);
-        // animation = new THREE.Animation(mesh, geometry.animation);
-        //animation.play(false, 0);
+      charLoader.load( "models/animate.js", function(geometry, materials){
+
+      var material = new THREE.MeshLambertMaterial({color: 0xffe0bd});
+      mesh = new THREE.SkinnedMesh(geometry, material);
+      mesh.position.set(-6, .75, -4);
+      mesh.rotation.y = .25;
+      scene.add(mesh);
+
+      //THREE.AnimationHandler.add(mesh.geometry.animations);
+      //   // animationInit(mesh);
+      //animation = new THREE.Animation(mesh, 'ArmatureAction');
+
+      //animation.play();
 
       });
-
-      // blendMesh = new THREE.BlendCharacter();
-      // blendMesh.load( "models/animate.json", start);
 
       // Add OrbitControls so that we can pan around with the mouse.
       controls = new THREE.OrbitControls(camera, renderer.domElement, 0 , 0, 0);
@@ -243,21 +205,16 @@ Demo controls:
     // Renders the scene and updates the render as needed.
     function animate() {
 
-      requestAnimationFrame(animate);
+      //animation.update(.01);
       controls.update();
       keyboardHandler();
       //THREE.AnimationHandler.update(.01);
 
       // Render the scene.
 
-      if ( video.readyState === video.HAVE_ENOUGH_DATA ) {
-        videoImageContext.drawImage( video, 0, 0 );
-
-        if ( videoTexture ) 
-          videoTexture.needsUpdate = true;
-        }
 
       renderer.render(scene, camera);
+      requestAnimationFrame(animate);
 
 
     }
